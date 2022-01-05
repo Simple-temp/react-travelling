@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from '../Navbar/Navbar';
 import "./LoggedInUserDestination.css";
 import Rectangle from "../../img/place/Rectangle 26.png";
 import Rectangles from "../../img/place/Rectangle 27.png";
 import Rectangless from "../../img/place/Rectangle 28.png";
 import st from "../../img/icon/st.png"
+import { UserContext } from '../../App';
 
 const LoggedInUserDestination = () => {
     const {id} = useParams();
+    const [loggedInUser,setloggedInUser] = useContext ( UserContext )
     let allplace ;
-    // let sreemongol;
-    // let sundorbon;
     if(id==1 || id==2 || id==3)
     {
         allplace = <div className="row">
@@ -128,6 +127,11 @@ const LoggedInUserDestination = () => {
                                     </li>
                                     <li>
                                         <a>contact</a>
+                                    </li>
+                                    <li>
+                                        {
+                                            <img src={loggedInUser.img} alt="" />  
+                                        }
                                     </li>
                                 </ul>
                             </div>

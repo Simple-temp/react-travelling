@@ -48,6 +48,15 @@
     font-size:17px;
     text-transform:capitalize;  
 }
+.usermenu li img 
+{
+    width:29px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
 .logo a 
 {
     text-decoration: none;
