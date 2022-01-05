@@ -1,0 +1,52 @@
+header{
+    background-image:linear-gradient( rgba(0, 0, 0 ,0.2), rgba(0, 0, 0 ,0.6)),url(../../img/place/Rectangle\ 1.png);
+    background-size: cover;
+    height:100vh;
+    position:relative;
+    background-position:center;
+    background-repeat: no-repeat;
+}
+/* .row
+{
+    --bs-gutter-x: 0rem;
+} */
+.img-size
+{
+    width:300px;
+    height:auto;
+}
+.carousel-item
+{
+    padding:5% 15% 0 15%;
+}
+.carousel-item .col-lg-6 h1 
+{
+    color:#fff;
+    text-transform: uppercase;
+    padding-bottom:15px;
+    font-weight:500px;
+    font-size:40px;
+}
+.carousel-item .col-lg-6 p
+{
+    color:#fff;
+}
+button i 
+{
+    padding-left:6px;
+}
+.link,
+.link:hover
+{
+    color:#fff;
+    text-decoration:none;
+}
+.btn 
+{
+    background-color: rgb(255, 174, 0);
+    border:none;
+}
+.btn:hover 
+{
+    background-color: rgb(255, 174, 0);
+}

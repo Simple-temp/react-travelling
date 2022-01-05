@@ -1,0 +1,73 @@
+* 
+{
+    box-sizing: border-box;
+}
+.placeDetails{
+    background-image: linear-gradient( rgba(0, 0, 0 ,0.2), rgba(0, 0, 0 ,0.6)),url(../../img/place/Rectangle\ 1.png);
+    background-size: cover;
+    height:100vh;
+    position:relative;
+    background-position:center;
+    background-repeat: no-repeat;
+}
+h1{
+    color:#fff;
+}
+.d-box h3
+{
+    color:#fff;
+    text-transform: uppercase;
+}
+.d-box p
+{
+    color:rgb(255, 255, 255);
+}
+.booking-box small
+{
+    color:rgb(0, 0, 0);
+}
+.booking-box span,
+p
+{
+    color:rgb(0, 0, 0);
+}
+.booking-box
+{
+    background-color: #fff;
+    padding:17px;
+}
+.booking-box p 
+{
+    font-weight:bold;
+    text-transform: uppercase;
+    padding:8px;
+    background-color: rgb(231, 231, 231);
+    margin-top:10px;
+}
+.booking-box span 
+{
+    text-transform: capitalize;
+}
+.booking-box .col-lg-6,
+.booking-box .col-lg-5 
+{
+    background-color: rgb(231, 231, 231);
+    margin:10px;
+    padding:13px 10px;
+}
+.booking-box img 
+{
+    width: 20px;
+    height:auto;
+    margin-left:100px;
+}
+.sajek 
+{
+    margin-top:100px;
+}
+.bookbtn,
+.bookbtn:hover
+{
+    text-decoration: none;
+    color:#fff;
+}

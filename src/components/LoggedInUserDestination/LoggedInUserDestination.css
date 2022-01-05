@@ -1,0 +1,61 @@
+.userdestination
+{
+    background-color: #fff;
+    color:#000;
+    height:100vh;
+    background-size: cover;
+    position:relative;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.img-box img
+{
+    width:100%;
+    display:block;
+}
+.room-info ul li img
+{
+    width:18px;
+}
+.room-info ul
+{
+    list-style: none;
+    display: flex;
+    padding-left: 0rem;
+}
+.room-info ul li
+{
+    margin-right:20px;
+}
+.room-info span {
+    padding-bottom:12px;
+}
+.usermenu
+{
+    list-style: none;
+    display:flex;
+    margin-left:200px;
+}
+.main
+{
+    max-width: 1170px;
+    margin:auto;
+    padding-top:20px;
+}
+.usermenu li
+{
+    margin-right:50px;
+    font-size:17px;
+    text-transform:capitalize;  
+}
+.logo a 
+{
+    text-decoration: none;
+    color:#000;
+    font-size:40px;
+    text-transform: uppercase;
+}
+.row h4 
+{
+    margin-top:20px;
+}

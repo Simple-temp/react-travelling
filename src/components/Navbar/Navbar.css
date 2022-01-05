@@ -1,0 +1,60 @@
+.logo-img
+{
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    background-image: linear-gradient( rgba(255, 255, 255, 255), rgba(255, 255, 255, 255));
+    background-image: #fff;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+.navbar-light .navbar-nav .nav-link 
+{
+    color:#fff;
+}
+.navbar-light .navbar-brand:hover 
+{
+    color:#fff;
+}
+.navbar-light .navbar-brand
+{
+    color:#fff;
+    font-size: 34px;
+    margin-right:40px;
+    text-transform: uppercase;
+    font-weight:600;
+}
+.login-btn
+{
+    background-color: rgb(255, 174, 0);
+    padding:0px 14px ;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    color:#000;
+    cursor:pointer;
+    text-transform: capitalize;
+}
+.search-bar
+{
+    width:100%;
+}
+.form-control {
+    transition: none;
+    background: transparent;
+    color: #fff;
+    width: 400px;
+}
+.form-control::placeholder{
+    color:#fff;
+}
+.nav-item
+{
+    margin-right:50px;
+    text-transform: capitalize;
+    font-size:17px;
+}
