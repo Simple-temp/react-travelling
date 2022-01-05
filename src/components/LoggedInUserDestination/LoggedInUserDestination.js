@@ -9,12 +9,12 @@ import st from "../../img/icon/st.png"
 
 const LoggedInUserDestination = () => {
     const {id} = useParams();
-    let sajek ;
+    let allplace ;
     // let sreemongol;
     // let sundorbon;
     if(id==1 || id==2 || id==3)
     {
-        sajek = <div className="row">
+        allplace = <div className="row">
             {
                 id==1 && <h4>Stay in Sajek</h4>
             }
@@ -135,7 +135,7 @@ const LoggedInUserDestination = () => {
                 </div>
             <div className="container">
                 {
-                    sajek
+                    allplace
                 }
             </div>
         </div>
