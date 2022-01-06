@@ -130,7 +130,7 @@ const LoggedInUserDestination = () => {
                                     </li>
                                     <li>
                                         {
-                                            <img src={loggedInUser.img} alt="" />  
+                                            <img src={loggedInUser.img} alt="" />
                                         }
                                     </li>
                                 </ul>

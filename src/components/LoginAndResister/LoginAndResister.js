@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import "./LoginAndResister.css"
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import fb from "../../img/icon/fb.png";
 import google from "../../img/icon/google.png";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup , GoogleAuthProvider , createUserWithEmailAndPassword , signInWithEmailAndPassword , updateProfile ,FacebookAuthProvider } from "firebase/auth";
 import { UserContext } from '../../App';
 import { initializeApp } from "firebase/app";
 import firebaseConfig from './firebaseConfig';
@@ -23,9 +23,11 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginAndResister = () => {
 
+
     const classes = useStyles();
 
     const provider = new GoogleAuthProvider();
+    const fbprovider = new FacebookAuthProvider();
 
     const [loggedInUser,setloggedInUser] = useContext ( UserContext );
 
@@ -33,23 +35,125 @@ const LoginAndResister = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
+    const facebook = () =>
+    {
+        const auth = getAuth();
+    signInWithPopup(auth, fbprovider)
+    .then((result) => {
+        const user = result.user;
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        navigate(from, { replace: true });
+        console.log(user);
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = FacebookAuthProvider.credentialFromError(error);
+    });
+    }
+
 
     const googleSignIn = () =>
     {
 
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-    .then((result) => {
-        const {displayName,email,photoURL} = result.user;
-        const signInuser = {name:displayName , email:email , img:photoURL};
-        setloggedInUser(signInuser);
-        navigate(from, { replace: true });
-    }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        const auth = getAuth();
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            const {displayName,email,photoURL} = result.user;
+            const signInuser = {name:displayName , email:email , img:photoURL};
+            setloggedInUser(signInuser);
+            navigate(from, { replace: true });
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.email;
+            const credential = GoogleAuthProvider.credentialFromError(error);
+        });
+    }
+
+    const [newperson,setNewperson] = useState(true);
+
+    const [user,setUser] = useState({
+        isSignIn : false,
+        name : "",
+        email : "",
+        password : "",
+        photo : "",
+        success : "",
+        error : "",
     });
+
+
+    const haldleBlur = (e) =>
+    {
+        let isvalid = true;
+        if( e.target.name === "email")
+        {
+          isvalid = /\S+@\S+.\S+/.test(e.target.value);
+        }
+        if( e.target.name === "password")
+        {
+          const passLength = e.target.value.length > 8 ;
+          const validPass = /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@$%^&*-])(?=.*?[0-9])/.test(e.target.value);
+          isvalid = passLength && validPass;
+        }
+        if(isvalid)
+        {
+          const newUserInfo = {...user}
+          newUserInfo [e.target.name] = e.target.value;
+          setUser(newUserInfo);
+        }
+    }
+
+    const haldleSubmit = (e) =>
+    {
+        if(newperson && user.email && user.password)
+        {
+            const auth = getAuth();
+            createUserWithEmailAndPassword(auth, user.email, user.password)
+            .then((res) => {
+                const newUserInfo = {...user}
+                setUser(newUserInfo);
+                setloggedInUser(newUserInfo);
+                update(user.name)
+                navigate(from, { replace: true });
+              })
+              .catch(error => {
+                const newUserInfo = {...user}
+                newUserInfo.error = error.message;
+                setUser(newUserInfo)
+              });
+        }
+        if(user.email && user.password)
+        {
+            const auth = getAuth();
+                signInWithEmailAndPassword(auth, user.email, user.password)
+                .then((res) => {
+                    const newUserInfo = {...user}
+                    setUser(newUserInfo);
+                    setloggedInUser(newUserInfo);
+                    navigate(from, { replace: true });
+                })
+                .catch((error) => {
+                    const newUserInfo = {...user}
+                    setUser(newUserInfo)
+                });
+        }
+        e.preventDefault();
+    }
+
+
+    const update = name =>
+    {
+        const auth = getAuth();
+        updateProfile(auth.currentUser, {
+        displayName: name
+        }).then(() => {
+            console.log("User name update successfully");
+        }).catch((error) => {
+        });
     }
 
     return (
@@ -62,7 +166,7 @@ const LoginAndResister = () => {
                                 </div>
                             </div>
                             <div className="col-lg-8 d-flex align-items-center">
-                                <ul className='usermenu'>
+                                <ul className='usermenu login-menu'>
                                     <li>
                                         <a>news</a>
                                     </li>
@@ -86,20 +190,37 @@ const LoginAndResister = () => {
                     <div className="row">
                         <div className="col-lg-4 mx-auto">
                             <div className="login-box">
-                                <h3>Login</h3>
-                                <form className={classes.root} noValidate autoComplete="off">
-                                    <TextField id="standard-basic" label="Email" className="w-100" />
-                                    <TextField id="standard-password-input" label="Password" type="password" autoComplete="current-password" className="w-100" />
-                                    <span><a href="" className='ml-5'>Forgot Password</a></span>
-                                    <input type="submit" value="Login" className="btn w-100 d-block mt-5" />
+                                <h3 className='text-center'>{ newperson ? "Create an account" : "Login"}</h3>
+                                <form className={classes.root} noValidate autoComplete="off" onSubmit={haldleSubmit}>
+                                    {
+                                        newperson && <TextField id="standard-basic" name="name" label="Name" className="w-100" required />
+                                    }
+                                    <TextField id="standard-basic" name="email" label="Email" className="w-100" onBlur={haldleBlur} required />
+                                    {
+                                        newperson && <small style={{color:"red"}}>{user.error && "Email already taken"}</small>
+                                    }
+                                    <TextField id="standard-password-input" name="password" label="Password" type="password" autoComplete="current-password" className="w-100" onBlur={haldleBlur}  required />
+                                    {
+                                        !newperson && <p style={{color:"rgb(255, 174, 0)",cursor:"pointer"}}>Forgot password?</p>
+                                    }
+                                    <input type="submit" value={ newperson ? "Create an account" : "Login"} className='btn w-100 d-block mt-5' />
                                 </form>
                                 <hr />
-                                <p className='text-center'>Dont have an account?<span><a href="">Create an account</a></span></p>
+                                <p className='text-center'>
+                                    {
+                                        !newperson ? "Don't have an account?" : "Already have an acoount?"
+                                    }
+                                <button className='tooglebtn' onClick={()=>setNewperson(!newperson)} >
+                                    {
+                                        newperson ? "Login" : "Create an account"
+                                    }
+                                </button>
+                                </p>
                             </div>
                             <hr />
                             <div className="others">
                                 <ul>
-                                    <li><img src={fb} alt="" /> <small>Continue with Facebook</small></li>
+                                    <li onClick={facebook}><img src={fb} alt="" /> <small>Continue with Facebook</small></li>
                                     <li onClick={googleSignIn}><img src={google} alt="" /> <small>Continue with Google</small></li>
                                 </ul>
                             </div>
@@ -111,3 +232,4 @@ const LoginAndResister = () => {
 };
 
 export default LoginAndResister;
+

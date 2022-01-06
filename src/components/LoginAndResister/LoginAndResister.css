@@ -39,3 +39,19 @@ form span a,
 {
     width:25px;
 }
+.tooglebtn
+{
+    color:rgb(255, 174, 0);
+    background: transparent;
+    border:none;
+    font-weight:600;
+    text-decoration:underline;
+}
+.login-menu
+{
+    margin-top:13px;
+}
+.login-menu li
+{
+    padding-top:5px;
+}
