@@ -128,9 +128,9 @@ const LoggedInUserDestination = () => {
                                     <li>
                                         <a>contact</a>
                                     </li>
-                                    <li>
+                                    <li className='logged-in'>
                                         {
-                                            <img src={loggedInUser.img} alt="" />
+                                            loggedInUser.name ? loggedInUser.name : <img src={loggedInUser.img} alt="" />
                                         }
                                     </li>
                                 </ul>

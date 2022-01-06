@@ -35,22 +35,18 @@ const LoginAndResister = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
-    const facebook = () =>
+    const facebookSignIn = () =>
     {
         const auth = getAuth();
     signInWithPopup(auth, fbprovider)
     .then((result) => {
-        const user = result.user;
-        const credential = FacebookAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
-        navigate(from, { replace: true });
-        console.log(user);
+        const info = result.user;
+        console.log("fb user",info);
     })
     .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.email;
-        const credential = FacebookAuthProvider.credentialFromError(error);
     });
     }
 
@@ -62,9 +58,10 @@ const LoginAndResister = () => {
         signInWithPopup(auth, provider)
         .then((result) => {
             const {displayName,email,photoURL} = result.user;
-            const signInuser = {name:displayName , email:email , img:photoURL};
+            const signInuser = {email:email , img:photoURL};
             setloggedInUser(signInuser);
             navigate(from, { replace: true });
+            console.log(signInuser)
         }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -129,7 +126,7 @@ const LoginAndResister = () => {
         if(user.email && user.password)
         {
             const auth = getAuth();
-                signInWithEmailAndPassword(auth, user.email, user.password)
+                signInWithEmailAndPassword(auth, user.email , user.password)
                 .then((res) => {
                     const newUserInfo = {...user}
                     setUser(newUserInfo);
@@ -193,13 +190,13 @@ const LoginAndResister = () => {
                                 <h3 className='text-center'>{ newperson ? "Create an account" : "Login"}</h3>
                                 <form className={classes.root} noValidate autoComplete="off" onSubmit={haldleSubmit}>
                                     {
-                                        newperson && <TextField id="standard-basic" name="name" label="Name" className="w-100" required />
+                                        newperson && <TextField id="standard-basic" name="name" label="Name" className="w-100" onBlur={haldleBlur} required />
                                     }
                                     <TextField id="standard-basic" name="email" label="Email" className="w-100" onBlur={haldleBlur} required />
                                     {
                                         newperson && <small style={{color:"red"}}>{user.error && "Email already taken"}</small>
                                     }
-                                    <TextField id="standard-password-input" name="password" label="Password" type="password" autoComplete="current-password" className="w-100" onBlur={haldleBlur}  required />
+                                    <TextField id="standard-password-input" name="password" label="Password minimum 8 charecters" type="password" autoComplete="current-password" className="w-100" onBlur={haldleBlur}  required />
                                     {
                                         !newperson && <p style={{color:"rgb(255, 174, 0)",cursor:"pointer"}}>Forgot password?</p>
                                     }
@@ -220,7 +217,7 @@ const LoginAndResister = () => {
                             <hr />
                             <div className="others">
                                 <ul>
-                                    <li onClick={facebook}><img src={fb} alt="" /> <small>Continue with Facebook</small></li>
+                                    <li onClick={facebookSignIn}><img src={fb} alt="" /> <small>Continue with Facebook</small></li>
                                     <li onClick={googleSignIn}><img src={google} alt="" /> <small>Continue with Google</small></li>
                                 </ul>
                             </div>
