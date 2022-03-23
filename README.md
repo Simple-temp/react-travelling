@@ -1,6 +1,6 @@
 # react-travelling
 
-Technologys: react, react-router-dom, firebase, private-route, bootstrap and material ui.
+Technologys: react, react-router-dom, firebase, private-route, bootstrap and material ui. <br>
 In this website there have 4 pages.
 1. home page (click booking)
 2. booking page ( click start booking)
